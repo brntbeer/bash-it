@@ -1,19 +1,10 @@
 sudo: false
-script: test/run
 language: c
 os:
   - linux
   - osx
 
-addons:
-  apt:
-    packages:
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
-      - cmake
-
-after_success: |
+before_script: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
   tar xzf master.tar.gz &&
   cd kcov-master &&
@@ -24,6 +15,17 @@ after_success: |
   sudo make install &&
   cd ../.. &&
   rm -rf kcov-master &&
-  mkdir -p coverage &&
-  kcov coverage test/run &&
+  mkdir -p coverage
+
+script: kcov coverage test/run
+
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
+
+after_success:
   bash <(curl -s https://codecov.io/bash)
