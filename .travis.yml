@@ -17,7 +17,7 @@ before_script: |
   rm -rf kcov-master &&
   mkdir -p coverage
 
-script: kcov coverage test/run
+script: test/run
 
 addons:
   apt:
