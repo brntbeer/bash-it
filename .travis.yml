@@ -17,7 +17,7 @@ before_script: |
   rm -rf kcov-master &&
   mkdir -p coverage
 
-script: test/run
+script: kcov coverage/ test/run
 
 addons:
   apt:
@@ -28,4 +28,4 @@ addons:
       - cmake
 
 after_success:
-  bash <(curl -s https://codecov.io/bash)
+  bash <(curl -s https://codecov.io/bash) -s coverage/
